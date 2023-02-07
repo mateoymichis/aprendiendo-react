@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aprendiendo REACt</title>
+    <title>Aprendiendo REACT</title>
     <style>
         picture {
             display: flex;
@@ -38,18 +38,28 @@
 
     <script type="text/babel">
         const $app = document.getElementById('app');
-        const h = React.createElement;
+        //const h = React.createElement;
+        const useState = React.useState;
 
-        const Avatar = params => {
-            const src = `https://randomuser.me/api/portraits/women/${params.id}.jpg`;
+        const Avatar = props => {
+            const [enabled, setEnabled] = useState(true); 
+            const src = `https://randomuser.me/api/portraits/women/${props.id}.jpg`;
+            const className = enabled ? '' : 'disabled';
             //return h('img', {src});
-            return <img src={src} />
+            return (
+            <picture>
+                <img onClick={() => {
+                    setEnabled(!enabled);
+                }} className={className} src={src} />
+                <span>{props.name}</span>
+            </picture>
+            );
         }
 
         ReactDOM.render(
             <div>
-                <Avatar id={1} />
-                <Avatar id={2} />
+                <Avatar id={1} name="Anna" />
+                <Avatar id={2} name="Perla" />
             </div>,
             $app
             //h("div", null, [h(Avatar, {id: 1}), h(Avatar, {id: 2})]), $app
